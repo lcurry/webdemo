@@ -44,7 +44,7 @@ podTemplate(
       // Using Maven build the war file
       // Do not run tests in this step
       stage('Build war') {
-        echo "Building version ${devTag}"
+        echo "Building version ${devTag} !"
 
         // Execute gradle Build
         dir("openshift-tasks") {
