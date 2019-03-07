@@ -22,12 +22,15 @@ Go to following URL:
 # Openshift 
 Create new app with Dockerfile strategy (docker file in current . directory)
 Several objects were created as a result, including a Service, Route, ImageStream, BuildConfig and a DeploymentConfig
+
 $ oc new-app --name webdemo . --strategy=docker
 
 This will not trigger the build so must trigger and tell location of source
+
 $ oc start-build bc/webdemo  --from-dir .
 
 To see the service
+
 $ oc get service
 
 
