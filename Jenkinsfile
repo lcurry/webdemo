@@ -6,7 +6,8 @@ podTemplate(
   containers: [
     containerTemplate(
       name: "jnlp",
-      image: "docker-registry.default.svc:5000/8ff4-jenkins/jenkins-agent-appdev",
+      //image: "docker-registry.default.svc:5000/basic-spring-boot-build/jenkins-agent-appdev",
+      image: "172.30.1.1:5000/basic-spring-boot-build/jenkins-agent-appdev",
       resourceRequestMemory: "1Gi",
       resourceLimitMemory: "2Gi",
       resourceRequestCpu: "1",
@@ -31,8 +32,10 @@ podTemplate(
       // and not inside the scope of a stage - otherwise they would not
       // be accessible from other stages.
       // Extract version from the pom.xml
-      def version = getVersionFromPom("pom.xml")
-
+      // def version = getVersionFromPom("pom.xml")
+      // TODO  - hardcode version for now 
+      def version = "1.0"
+      
       // TBD Set the tag for the development image: version + build number
       def devTag  = ""
       // Set the tag for the production image: version
