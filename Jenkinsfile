@@ -32,7 +32,9 @@ podTemplate(
       // be accessible from other stages.
       // Extract version from the pom.xml
       // def version = getVersionFromPom("pom.xml")
-
+      // TODO  - hardcode version for now 
+      def version = "1.0
+      
       // TBD Set the tag for the development image: version + build number
       def devTag  = ""
       // Set the tag for the production image: version
