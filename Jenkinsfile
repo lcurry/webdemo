@@ -46,7 +46,11 @@ podTemplate(
       stage('Build war') {
         echo "Building version ${devTag}"
 
-        // TBD: Execute Maven Build
+        // Execute gradle Build
+        dir("openshift-tasks") {
+          sh "gradle build"
+        }        
+        
       }
 
       // TBD: The next two stages should run in parallel
