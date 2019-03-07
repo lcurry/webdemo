@@ -48,7 +48,8 @@ podTemplate(
 
         // Execute gradle Build
         dir("openshift-tasks") {
-          sh "gradle build"
+          //sh "gradle build"  
+          sh "gradle --console verbose build"
         }        
         
       }
