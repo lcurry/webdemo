@@ -12,7 +12,7 @@ $ docker build . -t webdemo:1.0
 
 $ docker image ls
 
-Run --name <unique name of container>  <image name : tag>
+To run docker image in container in daemon mode exposing port 8080
 
 $ docker run  -p 8080:8080 -d  --name webdemo-7  webdemo:1.3
 
