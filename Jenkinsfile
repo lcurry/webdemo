@@ -82,6 +82,12 @@ podTemplate(
         echo "Building OpenShift container image tasks:${devTag}"
 
         // TBD: Build Image, tag Image
+          // Start Binary Build in OpenShift using the file we just published
+          // The filename is openshift-tasks.war in the 'target' directory of your current
+          // Jenkins workspace
+          withEnv(["version=${version}"]) {
+           sh 'oc start-build tasks -n basic-spring-boot-dev'
+          }
       }
 
       // Deploy the built image to the Development Environment.
@@ -91,6 +97,7 @@ podTemplate(
         // TBD: Deploy to development Project
         //      Set Image, Set VERSION
         //      Make sure the application is running and ready before proceeding
+
       }
 
       // Copy Image to Nexus container registry
