@@ -1,7 +1,7 @@
-FROM centos:latest
+FROM openshift/rhel7
 
-MAINTAINER http://www.centos.org
-LABEL Vendor="CentOS"
+#MAINTAINER http://www.centos.org
+#LABEL Vendor="CentOS"
 
 #ADD CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 #ADD epel.repo /etc/yum.repos.d/epel.repo
