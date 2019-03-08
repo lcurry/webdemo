@@ -54,7 +54,7 @@ podTemplate(
         echo "Building version ${devTag} !"
 
         // Execute gradle Build
-          sh "./gradlew build"
+          sh "./gradlew --debug build"
         
       }
 
