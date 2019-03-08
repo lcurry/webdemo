@@ -86,7 +86,7 @@ podTemplate(
           // The filename is openshift-tasks.war in the 'target' directory of your current
           // Jenkins workspace
           withEnv(["version=${version}"]) {
-           sh 'oc start-build webdemo --from-dir . --follow  -n basic-spring-boot-dev"
+           sh 'oc start-build webdemo --from-dir . --follow  -n basic-spring-boot-dev'
           }
       }
 
