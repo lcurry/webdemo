@@ -21,6 +21,10 @@ podTemplate(
     // settings for our Nexus installation
     def mvnCmd = "mvn -s ../nexus_settings.xml"
 
+    tools { 
+        jdk 'jdk8' 
+    }
+
     // Checkout Source Code.
     stage('Checkout Source') {
       checkout scm
@@ -89,6 +93,9 @@ podTemplate(
     		returnStdout: true
 		).trim()
 	echo "Output of ls command : ${OUTPUT_LS}"
+
+        echo "JAVA_HOME = ${JAVA_HOME}"
+        echo "PATH = ${PATH}"
 
         sh 'oc start-build webdemo --from-dir . --follow  -n basic-spring-boot-dev --build-loglevel=5'
                // sh "oc new-build --name=tasks --image-stream=jboss-eap70-openshift --binary=true --labels=app=tasks -n ${DEV_PROJECT} || true"
