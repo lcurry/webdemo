@@ -46,7 +46,7 @@ podTemplate(
         echo "Building version ${devTag} !"
 
         // Execute gradle Build
-          sh "gradle --console verbose build"
+          sh "gradlew build"
         
       }
 
