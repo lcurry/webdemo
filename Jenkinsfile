@@ -85,9 +85,16 @@ podTemplate(
           // Start Binary Build in OpenShift using the file we just published
           // The filename is openshift-tasks.war in the 'target' directory of your current
           // Jenkins workspace
-          withEnv(["version=${version}"]) {
-           sh 'oc start-build webdemo --from-dir . --follow  -n basic-spring-boot-dev --build-loglevel=5'
-          }
+
+//          withEnv(["version=${version}"]) {
+        dir("webdemo") { 
+          sh 'oc start-build webdemo --from-dir . --follow  -n basic-spring-boot-dev --build-loglevel=5'
+        } 
+               // sh "oc new-build --name=tasks --image-stream=jboss-eap70-openshift --binary=true --labels=app=tasks -n ${DEV_PROJECT} || true"
+               // build image
+               // sh "oc start-build tasks --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
+ 
+//	  }
       }
 
       // Deploy the built image to the Development Environment.
