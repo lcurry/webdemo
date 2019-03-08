@@ -26,8 +26,6 @@ podTemplate(
       checkout scm
     }
 
-    // Build the Tasks Service
-    dir('openshift-tasks') {
       // The following variables need to be defined at the top level
       // and not inside the scope of a stage - otherwise they would not
       // be accessible from other stages.
@@ -47,10 +45,7 @@ podTemplate(
         echo "Building version ${devTag} !"
 
         // Execute gradle Build
-        dir("openshift-tasks") {
-          //sh "gradle build"  
           sh "gradle --console verbose build"
-        }        
         
       }
 
@@ -94,9 +89,8 @@ podTemplate(
     		returnStdout: true
 		).trim()
 	echo "Output of ls command : ${OUTPUT_LS}"
-        dir("webdemo") { 
-          sh 'oc start-build webdemo --from-dir . --follow  -n basic-spring-boot-dev --build-loglevel=5'
-        } 
+
+        sh 'oc start-build webdemo --from-dir . --follow  -n basic-spring-boot-dev --build-loglevel=5'
                // sh "oc new-build --name=tasks --image-stream=jboss-eap70-openshift --binary=true --labels=app=tasks -n ${DEV_PROJECT} || true"
                // build image
                // sh "oc start-build tasks --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
@@ -139,7 +133,6 @@ podTemplate(
         echo "Switching Production application to ${destApp}."
         // TBD: Execute switch
       }
-    }
   }
 }
 
