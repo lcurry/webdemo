@@ -8,7 +8,8 @@ podTemplate(
       name: "jnlp",
       //image: "docker-registry.default.svc:5000/basic-spring-boot-build/jenkins-agent-appdev",
       // image: "172.30.1.1:5000/basic-spring-boot-build/jenkins-agent-appdev",
-      image: "openshift3/jenkins-slave-maven-rhel7",
+      image: "172.30.1.1:5000/basic-spring-boot-build/jenkins-slave-gradle",
+      // image: "openshift3/jenkins-slave-maven-rhel7",
       resourceRequestMemory: "1Gi",
       resourceLimitMemory: "2Gi",
       resourceRequestCpu: "1",
@@ -44,14 +45,14 @@ podTemplate(
     		script: 'ls -al',
     		returnStdout: true
 		).trim()
-	echo "Output of ls command : ${OUTPUT_LS}"
-        echo "JAVA_HOME = ${JAVA_HOME}"
-        echo "PATH = ${PATH}"
+	echo "Output of ls command : ${OUTPUT_LS}";
 
       // Using Maven build the war file
       // Do not run tests in this step
       stage('Build war') {
         echo "Building version ${devTag} !"
+        echo "JAVA_HOME = ${JAVA_HOME}"
+        echo "PATH = ${PATH}"
 
         // Execute gradle Build
           sh "./gradlew --debug build"
