@@ -1,6 +1,6 @@
 # Sample webdemo
 
-##Steps to run webdemo inside Openshift 
+## Steps to run webdemo inside Openshift 
 
 ### 1) Setup Infrastructure
 Setup infrastructure CICD projects for jenkins and DEV, Test, PROD projects
