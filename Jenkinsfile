@@ -87,6 +87,13 @@ podTemplate(
           // Jenkins workspace
 
 //          withEnv(["version=${version}"]) {
+
+	// get output of directory content 
+	OUTPUT_LS = sh (
+    		script: 'ls -al',
+    		returnStdout: true
+		).trim()
+	echo "Output of ls command : ${OUTPUT_LS}"
         dir("webdemo") { 
           sh 'oc start-build webdemo --from-dir . --follow  -n basic-spring-boot-dev --build-loglevel=5'
         } 
