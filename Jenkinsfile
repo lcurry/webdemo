@@ -40,13 +40,21 @@ podTemplate(
       // Set the tag for the production image: version
       def prodTag = ""
 
+	OUTPUT_LS = sh (
+    		script: 'ls -al',
+    		returnStdout: true
+		).trim()
+	echo "Output of ls command : ${OUTPUT_LS}"
+        echo "JAVA_HOME = ${JAVA_HOME}"
+        echo "PATH = ${PATH}"
+
       // Using Maven build the war file
       // Do not run tests in this step
       stage('Build war') {
         echo "Building version ${devTag} !"
 
         // Execute gradle Build
-          sh "gradlew build"
+          sh "./gradlew build"
         
       }
 
@@ -85,14 +93,6 @@ podTemplate(
 //          withEnv(["version=${version}"]) {
 
 	// get output of directory content 
-	OUTPUT_LS = sh (
-    		script: 'ls -al',
-    		returnStdout: true
-		).trim()
-	echo "Output of ls command : ${OUTPUT_LS}"
-
-        echo "JAVA_HOME = ${JAVA_HOME}"
-        echo "PATH = ${PATH}"
 
         sh 'oc start-build webdemo --from-dir . --follow  -n basic-spring-boot-dev --build-loglevel=5'
                // sh "oc new-build --name=tasks --image-stream=jboss-eap70-openshift --binary=true --labels=app=tasks -n ${DEV_PROJECT} || true"
