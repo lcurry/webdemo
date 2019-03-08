@@ -7,7 +7,8 @@ podTemplate(
     containerTemplate(
       name: "jnlp",
       //image: "docker-registry.default.svc:5000/basic-spring-boot-build/jenkins-agent-appdev",
-      image: "172.30.1.1:5000/basic-spring-boot-build/jenkins-agent-appdev",
+      // image: "172.30.1.1:5000/basic-spring-boot-build/jenkins-agent-appdev",
+      image: "openshift3/jenkins-slave-maven-rhel7",
       resourceRequestMemory: "1Gi",
       resourceLimitMemory: "2Gi",
       resourceRequestCpu: "1",
@@ -20,10 +21,6 @@ podTemplate(
     // Define Maven Command to point to the correct
     // settings for our Nexus installation
     def mvnCmd = "mvn -s ../nexus_settings.xml"
-
-    tools { 
-        jdk 'jdk8' 
-    }
 
     // Checkout Source Code.
     stage('Checkout Source') {
