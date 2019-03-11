@@ -7,8 +7,8 @@ podTemplate(
     containerTemplate(
       name: "jnlp",
       //image: "docker-registry.default.svc:5000/basic-spring-boot-build/jenkins-agent-appdev",
-      // image: "172.30.1.1:5000/basic-spring-boot-build/jenkins-agent-appdev",
-      image: "172.30.1.1:5000/basic-spring-boot-build/jenkins-slave-gradle",
+      image: "172.30.1.1:5000/basic-spring-boot-build/jenkins-agent-appdev",
+      // image: "172.30.1.1:5000/basic-spring-boot-build/jenkins-slave-gradle",
       // image: "openshift3/jenkins-slave-maven-rhel7",
       resourceRequestMemory: "1Gi",
       resourceLimitMemory: "2Gi",
