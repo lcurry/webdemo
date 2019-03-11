@@ -55,7 +55,7 @@ podTemplate(
         //echo "PATH = ${PATH}"
 
         // Execute gradle Build
-          sh "gradle --debug build"
+          sh "gradle build"
         
       }
 
