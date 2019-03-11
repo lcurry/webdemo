@@ -51,8 +51,8 @@ podTemplate(
       // Do not run tests in this step
       stage('Build war') {
         echo "Building version ${devTag} !"
-        echo "JAVA_HOME = ${JAVA_HOME}"
-        echo "PATH = ${PATH}"
+        //echo "JAVA_HOME = ${JAVA_HOME}"
+        //echo "PATH = ${PATH}"
 
         // Execute gradle Build
           sh "gradle --debug build"
