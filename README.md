@@ -167,3 +167,14 @@ $ oc expose svc/webdemo
 ```
 Go here to see:
 http://webdemo-basic-spring-boot-build.192.168.99.100.nip.io/webdemo/
+
+================================
+call ./gradlew copyDockerFiles
+
+set build_name=oc-build-4
+set app_name=oc-app-4
+set proj_name=test
+
+cat build/docker/Dockerfile | oc new-build -D="-" --name=%build_name% --strategy=docker
+oc start-build %build_name% --from-dir=build/docker --follow --wait
+oc new-app --docker-image docker-registry.default.svc:5000/%proj_name%/%build_name%:latest --name=%app_name% --insecure-registry
