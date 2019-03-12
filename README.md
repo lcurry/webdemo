@@ -38,6 +38,19 @@ As an example base image, we built our base imaage using the Dockerfile.rhel7 fo
 
 https://github.com/lcurry/jenkins-slave-gradle/blob/master/Dockerfile.rhel7
 
+Note: the Dockerfile above references a password file 'hgrc.rhel7' that is not included in the source control repo.
+You will need to create a file in the same directory containing the following content 
+(update appropriately for your environment)
+
+```
+[auth]
+mingus.prefix = https://path to your repo goes here
+mingus.username = scm user name goes here
+mingus.password = password goes here
+
+```
+You can then run the following commands to build the image inside Openshift:
+
 ```
 $ cat Dockerfile.rhel7 | oc new-build --name jenkins-agent-appdev --dockerfile='-' -n basic-spring-boot-build
 $ oc start-build jenkins-agent-appdev --follow -n basic-spring-boot-build
