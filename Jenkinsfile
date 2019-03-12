@@ -95,7 +95,7 @@ podTemplate(
 
 	// get output of directory content 
 
-        sh 'oc start-build servertemplate-runtime --from-dir . --follow  -n basic-spring-boot-dev'
+        sh 'oc start-build servlettemplate-runtime --from-dir . --follow  -n basic-spring-boot-dev'
                // sh "oc new-build --name=tasks --image-stream=jboss-eap70-openshift --binary=true --labels=app=tasks -n ${DEV_PROJECT} || true"
                // build image
                // sh "oc start-build tasks --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
