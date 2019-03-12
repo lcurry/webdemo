@@ -111,10 +111,10 @@ podTemplate(
         //      Set Image, Set VERSION
         //      Make sure the application is running and ready before proceeding
 
-#       sh 'oc set env dc/servlettemplate VERSION="${devTag} (servlettemplate-dev)" -n basic-spring-boot-dev'
+//       sh 'oc set env dc/servlettemplate VERSION="${devTag} (servlettemplate-dev)" -n basic-spring-boot-dev'
        sh 'oc set image dc/servlettemplate servlettemplate=docker-registry.default.svc:5000/basic-spring-boot-dev/servlettemplate-runtime:latest --source=imagestreamtag -n basic-spring-boot-dev'
        sh 'oc rollout latest dc/servlettemplate -n basic-spring-boot-dev'
-#       sh 'oc tag servlettemplate:${devTag} servlettemplate:${prodTag} -n basic-spring-boot-dev'
+//       sh 'oc tag servlettemplate:${devTag} servlettemplate:${prodTag} -n basic-spring-boot-dev'
 
       }
 
