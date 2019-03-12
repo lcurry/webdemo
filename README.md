@@ -10,21 +10,21 @@ objects necessary for this demo.
 Login to openshift.
 To login as administrator on minishift:
 ```
-    oc login -u system:admin
+    oc login -u admin
 ```
 You will use the applier framework to setup the infrastructure.
 Clone the repo here:
-https://github.com/redhat-cop/container-pipelines/tree/master/basic-tomcat
+https://github.com/redhat-cop/container-pipelines/tree/master/basic-spring-boot
 Run the following commands :
 ```
 ansible-galaxy install -r requirements.yml --roles-path=galaxy
 ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
 ```
 After performing this step you'll have the following projects created in Openshift.
-basic-tomcat-build
-basic-tomcat-dev
-basic-tomcat-stage
-basic-tomcat-prod
+basic-spring-boot-build
+basic-spring-boot-dev
+basic-spring-boot-stage
+basic-spring-boot-prod
 
 And Jenkins should be available running in openshift via URL. May take a few minustes to become available. 
 
@@ -66,7 +66,10 @@ jenkins-agent-appdev       172.30.1.1:5000/basic-spring-boot-build/jenkins-agent
 ### 3) Create Jenkins pipeline buildConfig 
 Create pipeline build config pointing to the Git REPO that holds Jenkinsfile.
 Alternatively could include Jenkinsfile inline in buildConfig .yml. 
-The following will create a jenkins pipeline BuildConfig that will automatically show up in Jenkins
+The following will create a jenkins pipeline BuildConfig that will automatically show up in Jenkins.
+(Note this command will create the buildConfig directly from the in-line yaml.  An alternative approach would 
+be to create the buldConfig with 'oc new-build' passing the appropriate options. Either technique result in the same
+buildConfig object created in Openshift.)   
 ```
 oc create -n basic-spring-boot-build -f - <<EOF
 apiVersion: v1
@@ -90,8 +93,15 @@ kind: List
 metadata: []
 EOF
 ```
+The above points to the Jenkinsfile in Kallithea git repo.  The buildConfig will also need the credentials for
+accessing Kallithea.  These will be included as souce secrets and can be run from the command line. 
+```
+oc create secret generic kallithea-login  --from-literal=username=XXX --from-literal=password=XXX --type=kubernetes.io/basic-auth -n basic-spring-boot-build
 
-The above points to the public repo that contains the webdemo app.  
+TBD
+
+```
+
 
 ### 4) Create mew buildConfig (docker strategy) for application build. 
 
