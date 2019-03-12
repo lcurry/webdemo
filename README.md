@@ -32,11 +32,12 @@ And Jenkins should be available running in openshift via URL. May take a few min
 ### 2) Create Jenkins Slave agent Image  
 Create Custom "slave" Agent container for Jenkins.  This image will be specified in the Jenkinsfile as our build image.  
 We need this step if our build image requires anything above and beyond standard build images. 
-*Note we determined probably don't need gradle.*
+E.g. Gradle, JDK, and Mercurial client.
 We can add anything else we might need for the build.
 As an example base image, we built our base imaage using the Dockerfile.rhel7 found here:
 
-https://github.com/redhat-cop/containers-quickstarts/tree/master/jenkins-slaves/jenkins-slave-gradle
+https://github.com/lcurry/jenkins-slave-gradle/blob/master/Dockerfile.rhel7
+
 ```
 $ cat Dockerfile.rhel7 | oc new-build --name jenkins-agent-appdev --dockerfile='-' -n basic-spring-boot-build
 $ oc start-build jenkins-agent-appdev --follow -n basic-spring-boot-build
