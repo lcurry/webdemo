@@ -141,32 +141,6 @@ oc start-build bc/webdemo-pipeline -n basic-spring-boot-build
 You can follow the progress of the build from the Jenkins console logs.
 
 
-## Steps to run locally 
-
-To build using gradle. This will place the .war file in ./build/libs/webdemo.war
-```
-$ gradle build      
-```
-
-Local Docker 
-To build the docker image
-```
-$ docker build . -t webdemo:1.0
-
-$ docker image ls
-```
-To run docker image in container in daemon mode exposing port 8080
-```
-$ docker run  -p 8080:8080 -d  --name webdemo-7  webdemo:1.3
-```
-To stand up with embedded tomcat for test (no Docker):
-```
-$ gradle appRun
-```
-From browser go to following URL:
-
-http://localhost:8080/webdemo
-
 ## Deploy to Openshift  (without Jenkins Pipeline)
 
 ### 1) Build source 
@@ -206,3 +180,29 @@ Additional builds can be triggerd by running the 'start-build' command above. Th
 ### 5) Expose the service by adding proper Path and enable Security
 In addition, the "route" will need to have the following path added "/OCServletTemplate", and also enable Security.
 You can do this from the Openshift UI under "routes".
+
+## Steps to run locally with Docker (TBD) 
+
+To build using gradle. This will place the .war file in ./build/libs/webdemo.war
+```
+$ ./gradlew build      
+```
+
+Local Docker 
+To build the docker image
+```
+$ docker build . -t webdemo:1.0
+
+$ docker image ls
+```
+To run docker image in container in daemon mode exposing port 8080
+```
+$ docker run  -p 8080:8080 -d  --name webdemo-7  webdemo:1.3
+```
+To stand up with embedded tomcat for test (no Docker):
+```
+$ gradle appRun
+```
+From browser go to following URL:
+
+http://localhost:8080/webdemo
