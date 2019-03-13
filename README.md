@@ -127,7 +127,8 @@ oc set triggers dc/servlettemplate-runtime --remove-all -n  basic-spring-boot-de
 oc expose dc servlettemplate-runtime --port 8080 -n basic-spring-boot-dev
 oc expose svc servlettemplate-runtime -n basic-spring-boot-dev
 ```
-
+You may notice the above 'new-app' will trigger a build/deploy that will fail based on the missing image with the 
+given tag. However, after running the --remove-all triggers (next command) that should stop auto triggering the build.
 In addition, the "route" will need to have the following path added "/OCServletTemplate", and also enable Security.
 
 
