@@ -58,7 +58,7 @@ $ oc start-build jenkins-agent-appdev --follow -n basic-spring-boot-build
 
 Above will create image in Openshift registry
 ```
-$ oc get is
+$ oc get is -n basic-spring-boot-build
 jenkins-agent-appdev       172.30.1.1:5000/basic-spring-boot-build/jenkins-agent-appdev       latest    About a minute ago
 ```
 
