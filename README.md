@@ -83,41 +83,59 @@ items:
       contextDir: "."
       type: "Git"
       git:
-        reg: "dev"
-        uri: "https://github.com/lcurry/webdemo.git"
+        ref: "master"
+        uri: "https://kallithea_jenkins@mingus.nrlssc.navy.mil/hg/devops/redhat/openshift-cicd-poc"
     strategy:
       type: "JenkinsPipeline"
       jenkinsPipelineStrategy:
-        jenkinsfilePath: Jenkinsfile
+        jenkinsfilePath: jenkins-pipeline/Jenkinsfile
 kind: List
 metadata: []
 EOF
 ```
 The above points to the Jenkinsfile in Kallithea git repo.  The buildConfig will also need the credentials for
-accessing Kallithea.  These will be included as souce secrets and can be run from the command line. 
+accessing Kallithea.  These will be included in the buildConfig as souce secrets.  In addition the GIT_SSL_NO_VERIFY=true 
+needs to be set in the buildConfig.
+Both of these additions to the buildConfig can be made in the Openshift UI or from the command line.
+
 ```
+Commands TBD
 oc create secret generic kallithea-login  --from-literal=username=XXX --from-literal=password=XXX --type=kubernetes.io/basic-auth -n basic-spring-boot-build
+oc set build-secret --source bc/webdemo-pipeline kallithea-login -n basic-spring-boot-build
 
-TBD
-
+END Commands TBD
 ```
 
 
 ### 4) Create new buildConfig (docker strategy) for application build. 
 
-This build will be started (triggered) from the Jenkinsfile (associated with above Jenkins Pipeline Build Config).  See Jenkinsfile for starting the bulid using the buildConfig created in this step.
-To create the new build config
+This build will be manually started (triggered) from the Jenkinsfile (associated with above Jenkins Pipeline Build Config).  See Jenkinsfile for starting the bulid using the buildConfig created in this step.
+To create the new build config.  Note this buildConfig is created in the namespace/project of the DEV environment for deployment 
+of the built artifact to DEV.
 ```
-oc new-build --strategy=docker --binary=true --docker-image centos:centos7 --name webdemo -n basic-spring-boot-dev
+oc new-build --strategy=docker --binary=true --docker-image centos:centos7 --name servlettemplate-runtime -n basic-spring-boot-dev
 ```
-The above command will create a new buildConfig that will be used to create the runtime image (from existing Dockerfile) for the application via a builder based on centos.
+The above command will create a new buildConfig in the basic-spring-boot-dev project namespace that will be used to create the runtime image (from existing Dockerfile) for the application via a builder based on centos.
 
+### 5) Set up additional application objects in Openshift.
+This preperation will create placeholders for the objects in Openshift needed for rollout of the application to openshift.
+Certain values in these objects won't get populated until the build is run from the Jenkinsfile.
 
+```
+oc new-app --docker-image docker-registry.default.svc:5000/basic-spring-boot-dev/servlettemplate-runtime:0.0-0 --name=servlettemplate-runtime --allow-missing-images -n  basic-spring-boot-dev --insecure-registry
+oc set triggers dc/servlettemplate-runtime --remove-all -n  basic-spring-boot-dev
+oc expose dc servlettemplate-runtime --port 8080 -n basic-spring-boot-dev
+oc expose svc servlettemplate-runtime -n basic-spring-boot-dev
+```
 
-### 5) Trigger the build  
+### 6) Trigger the build  
 From within Jenkins (within Openshift) use the webdemo-pipeline to start new build. 
-This will cause the Jenkinsfile to run. 
+This will cause the Jenkinsfile to run.  Alternatively, you can trigger the build from the command line.
+```
+oc start-build bc/webdemo-pipeline -n basic-spring-boot-build
 
+```
+You can follow the progress of the build from the Jenkins console logs.
 
 
 ## Steps to run locally 
