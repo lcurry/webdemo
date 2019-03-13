@@ -128,6 +128,9 @@ oc expose dc servlettemplate-runtime --port 8080 -n basic-spring-boot-dev
 oc expose svc servlettemplate-runtime -n basic-spring-boot-dev
 ```
 
+In addition, the "route" will need to have the following path added "/OCServletTemplate", and also enable Security.
+
+
 ### 6) Trigger the build  
 From within Jenkins (within Openshift) use the webdemo-pipeline to start new build. 
 This will cause the Jenkinsfile to run.  Alternatively, you can trigger the build from the command line.
