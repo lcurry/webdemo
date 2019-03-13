@@ -84,7 +84,7 @@ items:
       type: "Git"
       git:
         ref: "master"
-        uri: "https://kallithea_jenkins@mingus.nrlssc.navy.mil/hg/devops/redhat/openshift-cicd-poc"
+        uri: "https://URL for SCM goes here/hg/devops/redhat/openshift-cicd-poc"
     strategy:
       type: "JenkinsPipeline"
       jenkinsPipelineStrategy:
