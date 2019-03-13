@@ -25,7 +25,9 @@ podTemplate(
 
     // Checkout Source Code.
     stage('Checkout Source') {
-      checkout scm
+      //checkout scm
+	
+      sh "hg clone --insecure https://kallithea_jenkins@mingus.nrlssc.navy.mil/hg/templates/OCServletTemplate"
     }
 
       // The following variables need to be defined at the top level
@@ -54,8 +56,11 @@ podTemplate(
         //echo "JAVA_HOME = ${JAVA_HOME}"
         //echo "PATH = ${PATH}"
 
+	dir("OCServletTemplate") {
+          sh "chmod u+x gradlew"
         // Execute gradle Build
-          sh "gradle build"
+          sh "./gradlew copyDockerFiles"
+	}
         
       }
 
@@ -95,11 +100,12 @@ podTemplate(
 
 	// get output of directory content 
 
-        sh 'oc start-build servlettemplate-runtime --from-dir . --follow  -n basic-spring-boot-dev'
+	dir("OCServletTemplate") {
+         	sh 'oc start-build servlettemplate-runtime --from-dir=build/docker --follow  --wait -n basic-spring-boot-dev'
                // sh "oc new-build --name=tasks --image-stream=jboss-eap70-openshift --binary=true --labels=app=tasks -n ${DEV_PROJECT} || true"
                // build image
                // sh "oc start-build tasks --from-dir=oc-build --wait=true -n ${DEV_PROJECT}"
- 
+	} 
 //	  }
       }
 
@@ -112,8 +118,8 @@ podTemplate(
         //      Make sure the application is running and ready before proceeding
 
 //       sh 'oc set env dc/servlettemplate VERSION="${devTag} (servlettemplate-dev)" -n basic-spring-boot-dev'
-       sh 'oc set image dc/servlettemplate servlettemplate=basic-spring-boot-dev/servlettemplate-runtime:latest --source=imagestreamtag -n basic-spring-boot-dev'
-       sh 'oc rollout latest dc/servlettemplate -n basic-spring-boot-dev'
+       sh 'oc set image dc/servlettemplate-runtime servlettemplate-runtime=basic-spring-boot-dev/servlettemplate-runtime:latest --source=imagestreamtag -n basic-spring-boot-dev'
+       sh 'oc rollout latest dc/servlettemplate-runtime -n basic-spring-boot-dev'
 //       sh 'oc tag servlettemplate:${devTag} servlettemplate:${prodTag} -n basic-spring-boot-dev'
 
       }
