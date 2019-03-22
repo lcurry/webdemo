@@ -21,11 +21,12 @@ ansible-galaxy install -r requirements.yml --roles-path=galaxy
 ansible-playbook -i .applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
 ```
 After performing this step you'll have the following projects created in Openshift.
+```
 basic-spring-boot-build
 basic-spring-boot-dev
 basic-spring-boot-stage
 basic-spring-boot-prod
-
+```
 And Jenkins should be available running in openshift via URL. May take a few minustes to become available. 
 
 
